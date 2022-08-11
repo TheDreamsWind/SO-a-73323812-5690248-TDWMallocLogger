@@ -135,7 +135,7 @@ bool log_objc_class(uint32_t type, void *ptr, unsigned size) {
         char c_class_name[name_max_length];
         if (CFStringGetCString(class_name, c_class_name, name_max_length, kCFStringEncodingUTF8)) {
             const char *alloc_name = alloc_type_name(type);
-            nomalloc_printf_sync("%s: ObjC class %s; Pointer: %p Size: %u\n", alloc_name, c_class_name, objc_ptr, size);
+            nomalloc_printf_sync("%7s: Pointer: %p; Size: %u; Obj-C class: \"%s\"\n", alloc_name, objc_ptr, size, c_class_name);
             return true;
         }
     }
@@ -167,7 +167,11 @@ void my_malloc_logger(uint32_t type, uintptr_t param0, uintptr_t param1, uintptr
     
     if (!log_objc_class(type, ptr, size)) {
         const char *alloc_name = alloc_type_name(type);
-        nomalloc_printf_sync("%s: Pointer: %p Size: %u\n", alloc_name, ptr, size);
+        nomalloc_printf_sync("%7s: Pointer: %p; Size: %u\n", alloc_name, ptr, size);
+    }
+    
+    if (original_malloc_logger) {
+        original_malloc_logger(type, param0, param1, param2, param3, frames_to_skip);
     }
     
 }
