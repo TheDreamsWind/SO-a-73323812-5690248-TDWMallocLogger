@@ -1,6 +1,6 @@
 //
 //  malloc_logger.h
-//  ObjCPlayground
+//  TDWMallocLogger
 //
 //  Created by Aleksandr Medvedev on 10.08.2022.
 //
