@@ -8,12 +8,17 @@
 #include "malloc_logger.h"
 #include "nomalloc_printf.h"
 
+#include <pthread.h>
 #include <objc/runtime.h>
 #include <CoreFoundation/CoreFoundation.h>
 
 #pragma mark - ObjC class record
 
+
+
+pthread_mutex_t objc_class_records_mutex = PTHREAD_MUTEX_INITIALIZER;
 CFMutableDictionaryRef objc_class_records;
+
 bool is_malloc_logger_enabled(void);
 
 void refresh_objc_class_list(void) {
@@ -24,6 +29,7 @@ void refresh_objc_class_list(void) {
         should_reenable_malloc_logger = true;
     }
     
+    pthread_mutex_lock(&objc_class_records_mutex);
     if (objc_class_records) {
         CFRelease(objc_class_records);
     }
@@ -44,6 +50,7 @@ void refresh_objc_class_list(void) {
         CFDictionarySetValue(objc_class_records, class, class_name);
         CFRelease(class_name);
     }
+    pthread_mutex_unlock(&objc_class_records_mutex);
     
     if (should_reenable_malloc_logger) {
         tdw_enable_malloc_logger();
@@ -106,26 +113,33 @@ const char *alloc_type_name(uint32_t type) {
 
 bool log_objc_class(uint32_t type, void *ptr, unsigned size) {
     id objc_ptr = (id)ptr;
+    
+    pthread_mutex_lock(&objc_class_records_mutex);
     if (!objc_class_records || !objc_ptr) {
+        pthread_mutex_unlock(&objc_class_records_mutex);
         return false;
     }
     
     Class objc_class = object_getClass(objc_ptr);
     if (!objc_class) {
+        pthread_mutex_unlock(&objc_class_records_mutex);
         return false;
     }
     
     const CFStringRef class_name;
     const bool found = CFDictionaryGetValueIfPresent(objc_class_records, objc_class, (const void **)&class_name);
+    pthread_mutex_unlock(&objc_class_records_mutex);
+    
     if (found) {
         const static unsigned name_max_length = 256;
         char c_class_name[name_max_length];
         if (CFStringGetCString(class_name, c_class_name, name_max_length, kCFStringEncodingUTF8)) {
             const char *alloc_name = alloc_type_name(type);
-            nomalloc_printf("%s: ObjC class %s; Pointer: %p Size: %u\n", alloc_name, c_class_name, objc_ptr, size);
+            nomalloc_printf_sync("%s: ObjC class %s; Pointer: %p Size: %u\n", alloc_name, c_class_name, objc_ptr, size);
             return true;
         }
     }
+    
     
     return false;
 }
@@ -153,7 +167,7 @@ void my_malloc_logger(uint32_t type, uintptr_t param0, uintptr_t param1, uintptr
     
     if (!log_objc_class(type, ptr, size)) {
         const char *alloc_name = alloc_type_name(type);
-        nomalloc_printf("%s: Pointer: %p Size: %u\n", alloc_name, ptr, size);
+        nomalloc_printf_sync("%s: Pointer: %p Size: %u\n", alloc_name, ptr, size);
     }
     
 }
