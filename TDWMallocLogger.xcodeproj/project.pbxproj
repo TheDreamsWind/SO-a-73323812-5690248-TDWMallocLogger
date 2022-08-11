@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D8944C628A5219C000AF715 /* TDWMallocLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D8944C528A5219C000AF715 /* TDWMallocLogger.m */; };
-		5D8944C728A5219C000AF715 /* TDWMallocLogger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D8944C428A5219C000AF715 /* TDWMallocLogger.h */; };
+		5D8944D028A521EF000AF715 /* malloc_logger.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D8944CD28A521EE000AF715 /* malloc_logger.c */; };
+		5D8944D128A5225B000AF715 /* malloc_logger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D8944CE28A521EE000AF715 /* malloc_logger.h */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		5D8944BF28A5219C000AF715 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
+			dstPath = include;
 			dstSubfolderSpec = 16;
 			files = (
-				5D8944C728A5219C000AF715 /* TDWMallocLogger.h in CopyFiles */,
+				5D8944D128A5225B000AF715 /* malloc_logger.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -26,8 +26,9 @@
 
 /* Begin PBXFileReference section */
 		5D8944C128A5219C000AF715 /* libTDWMallocLogger.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTDWMallocLogger.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D8944C428A5219C000AF715 /* TDWMallocLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDWMallocLogger.h; sourceTree = "<group>"; };
-		5D8944C528A5219C000AF715 /* TDWMallocLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDWMallocLogger.m; sourceTree = "<group>"; };
+		5D8944CD28A521EE000AF715 /* malloc_logger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = malloc_logger.c; sourceTree = "<group>"; };
+		5D8944CE28A521EE000AF715 /* malloc_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = malloc_logger.h; sourceTree = "<group>"; };
+		5D8944CF28A521EF000AF715 /* nomalloc_printf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nomalloc_printf.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,8 +61,9 @@
 		5D8944C328A5219C000AF715 /* TDWMallocLogger */ = {
 			isa = PBXGroup;
 			children = (
-				5D8944C428A5219C000AF715 /* TDWMallocLogger.h */,
-				5D8944C528A5219C000AF715 /* TDWMallocLogger.m */,
+				5D8944CD28A521EE000AF715 /* malloc_logger.c */,
+				5D8944CE28A521EE000AF715 /* malloc_logger.h */,
+				5D8944CF28A521EF000AF715 /* nomalloc_printf.h */,
 			);
 			path = TDWMallocLogger;
 			sourceTree = "<group>";
@@ -123,7 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D8944C628A5219C000AF715 /* TDWMallocLogger.m in Sources */,
+				5D8944D028A521EF000AF715 /* malloc_logger.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
