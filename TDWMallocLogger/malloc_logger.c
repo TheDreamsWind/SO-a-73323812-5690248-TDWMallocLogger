@@ -22,7 +22,7 @@ CFMutableDictionaryRef objc_class_records;
 bool is_malloc_logger_enabled(void);
 
 void refresh_objc_class_list(void) {
-    // Supress malloc logger while initiating Objc classes list
+    // Suppress malloc logger while initiating Objc classes list
     bool should_reenable_malloc_logger = false;
     if (is_malloc_logger_enabled()) {
         tdw_disable_malloc_logger();

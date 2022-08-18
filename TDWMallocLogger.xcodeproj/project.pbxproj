@@ -17,7 +17,7 @@
 		5D8944BF28A5219C000AF715 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = include;
+			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
 				5D89453F28A540B3000AF715 /* LICENSE.txt in CopyFiles */,
