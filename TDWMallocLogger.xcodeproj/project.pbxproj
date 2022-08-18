@@ -10,7 +10,7 @@
 		5D8944D028A521EF000AF715 /* malloc_logger.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D8944CD28A521EE000AF715 /* malloc_logger.c */; };
 		5D89451F28A5376C000AF715 /* nomalloc_printf.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D89451E28A5376C000AF715 /* nomalloc_printf.c */; };
 		5D89453E28A540AD000AF715 /* malloc_logger.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D8944CE28A521EE000AF715 /* malloc_logger.h */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5D89453F28A540B3000AF715 /* LICENSE.md in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D89453C28A54047000AF715 /* LICENSE.md */; };
+		5D89453F28A540B3000AF715 /* LICENSE.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5D89453C28A54047000AF715 /* LICENSE.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,7 +20,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				5D89453F28A540B3000AF715 /* LICENSE.md in CopyFiles */,
+				5D89453F28A540B3000AF715 /* LICENSE.txt in CopyFiles */,
 				5D89453E28A540AD000AF715 /* malloc_logger.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -33,7 +33,7 @@
 		5D8944CE28A521EE000AF715 /* malloc_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = malloc_logger.h; sourceTree = "<group>"; };
 		5D8944CF28A521EF000AF715 /* nomalloc_printf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nomalloc_printf.h; sourceTree = "<group>"; };
 		5D89451E28A5376C000AF715 /* nomalloc_printf.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = nomalloc_printf.c; sourceTree = "<group>"; };
-		5D89453C28A54047000AF715 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		5D89453C28A54047000AF715 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		5D89454128A55405000AF715 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				5D89454128A55405000AF715 /* README.md */,
-				5D89453C28A54047000AF715 /* LICENSE.md */,
+				5D89453C28A54047000AF715 /* LICENSE.txt */,
 				5D8944C328A5219C000AF715 /* TDWMallocLogger */,
 				5D8944C228A5219C000AF715 /* Products */,
 			);
