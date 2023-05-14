@@ -19,9 +19,12 @@
 pthread_mutex_t objc_class_records_mutex = PTHREAD_MUTEX_INITIALIZER;
 CFMutableDictionaryRef objc_class_records;
 
-bool is_malloc_logger_enabled(void);
 
-void refresh_objc_class_list(void) {
+#pragma mark Private
+
+static bool is_malloc_logger_enabled(void);
+
+static void refresh_objc_class_list(void) {
     // Suppress malloc logger while initiating Objc classes list
     bool should_reenable_malloc_logger = false;
     if (is_malloc_logger_enabled()) {
@@ -57,7 +60,9 @@ void refresh_objc_class_list(void) {
     }
 }
 
-void tdw_disable_objc_class_tracker() {
+#pragma mark Interface
+
+void tdw_disable_objc_class_tracker(void) {
     // Supress malloc logger while releasing Objc classes list
     bool should_reenable_malloc_logger = false;
     if (is_malloc_logger_enabled()) {
@@ -76,11 +81,13 @@ void tdw_disable_objc_class_tracker() {
     }
 }
 
-void tdw_enable_objc_class_tracker() {
+void tdw_enable_objc_class_tracker(void) {
     refresh_objc_class_list();
 }
 
 #pragma mark - Malloc Logger
+
+#pragma mark Private
 
 #define MALLOC_LOG_TYPE_ALLOCATE    2
 #define MALLOC_LOG_TYPE_DEALLOCATE  4
@@ -94,9 +101,9 @@ void tdw_enable_objc_class_tracker() {
 
 typedef void(malloc_logger_t)(uint32_t, uintptr_t, uintptr_t, uintptr_t, uintptr_t, uint32_t);
 extern malloc_logger_t *malloc_logger;
-malloc_logger_t* original_malloc_logger;
+malloc_logger_t *original_malloc_logger;
 
-const char *alloc_type_name(uint32_t type) {
+static const char *alloc_type_name(uint32_t type) {
     switch (type) {
         case MALLOC_OP_MALLOC:
             return "MALLOC";
@@ -111,7 +118,7 @@ const char *alloc_type_name(uint32_t type) {
     }
 }
 
-bool log_objc_class(uint32_t type, void *ptr, unsigned size) {
+static bool log_objc_class(uint32_t type, void *ptr, unsigned size) {
     id objc_ptr = (id)ptr;
     
     pthread_mutex_lock(&objc_class_records_mutex);
@@ -144,7 +151,7 @@ bool log_objc_class(uint32_t type, void *ptr, unsigned size) {
     return false;
 }
 
-void my_malloc_logger(uint32_t type, uintptr_t param0, uintptr_t param1, uintptr_t param2,
+static void my_malloc_logger(uint32_t type, uintptr_t param0, uintptr_t param1, uintptr_t param2,
                       uintptr_t param3, uint32_t frames_to_skip) {
     
     void *ptr = NULL;
@@ -176,16 +183,18 @@ void my_malloc_logger(uint32_t type, uintptr_t param0, uintptr_t param1, uintptr
     
 }
 
-bool is_malloc_logger_enabled() {
+static bool is_malloc_logger_enabled(void) {
     return malloc_logger == my_malloc_logger;
 }
 
-void tdw_enable_malloc_logger() {
+#pragma mark Interface
+
+void tdw_enable_malloc_logger(void) {
     original_malloc_logger = malloc_logger;
     malloc_logger = my_malloc_logger;
 }
 
-void tdw_disable_malloc_logger() {
+void tdw_disable_malloc_logger(void) {
     if (!is_malloc_logger_enabled()) {
         return;
     }

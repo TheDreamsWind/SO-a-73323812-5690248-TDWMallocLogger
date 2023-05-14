@@ -8,6 +8,7 @@
 #include <unistd.h> // no idea what it is, but STDOUT_FILENO is defined there
 #include <stdarg.h>
 #include <pthread.h>
+#include "nomalloc_printf.h"
 
 extern void _simple_vdprintf(int, const char *, va_list);
 
